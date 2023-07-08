@@ -3,7 +3,8 @@
   <h4>顯示文字</h4>
   <div>{{ name }}</div>
   <div v-text="name"></div>
-
+  <!-- 事件 -->
+  <button @click="changName">changName</button>
   <br />
 
   <!-- 顯示HTML -->
@@ -20,18 +21,24 @@
 
   <h4>v-show條件顯示</h4>
   <div v-show="KT == 2">KT2</div>
-
+  KT value: {{ KT }}
+  <button @click="plus">plus</button>
+  <button @click="minus">minus</button>
   <br />
 
   <!-- for 迴圈[Arr] -->
   <h4>for 迴圈[Arr]</h4>
   <ul>
     <li v-for="item in array" :key="item">{{ item }}</li>
-    <li v-for="(item, index) in array" :key="item">{{ index }}</li>
-    <li style="color: red" v-for="(item, index) in array" :key="item">{{ index + 1 }}</li>
+    <!-- <li v-for="(item, index) in array" :key="item">{{ index }}</li> -->
+    <!-- <li style="color: red" v-for="(item, index) in array" :key="item">{{ index + 1 }}</li> -->
   </ul>
-
+  <!-- 傳 event 的2種寫法 -->
+  <!-- <input type="text" v-model="addLi" @keydown.enter="add" /> -->
+  <input type="text" v-model="addLi" @keydown.enter="add($event)" />
+  <button @click="add">add</button>
   <br />
+
   <!-- for 迴圈[Arr] -->
   <h4>for 迴圈[obj]</h4>
   <ul>
@@ -145,7 +152,7 @@ import { ref } from 'vue'
 const name = ref('KT')
 const html = ref('<span style="color: red">KT2</span>')
 const KT = ref(1)
-const array = ['KT', 'KT1', 'KT2']
+const array = ref(['KT', 'KT1', 'KT2'])
 const obj = [
   {
     name: 'KT1',
@@ -175,6 +182,24 @@ const radioValue = ref()
 const message = ref('')
 const selected = ref('')
 const selecteMultiple = ref([])
+const addLi = ref('')
+
+const changName = () => {
+  name.value = 'KT1'
+}
+
+const plus = () => {
+  KT.value++
+}
+
+const minus = () => {
+  KT.value--
+}
+
+const add = (e) => {
+  console.log('e', e)
+  array.value.push(addLi.value)
+}
 </script>
 
 <style>
